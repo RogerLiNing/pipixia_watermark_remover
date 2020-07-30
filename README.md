@@ -3,16 +3,16 @@
 
 ## 安装
 ```shell script
-go get -u github.com/RogerLiNing/pipxia_watermark_remover
+go get -u github.com/RogerLiNing/pipixia_watermark_remover
 ```
 
 ## 使用
 ```go
 import (
-	pipxia "github.com/RogerLiNing/pipxia_watermark_remover"
+	pipxia "github.com/RogerLiNing/pipixia_watermark_remover"
 )
 
-url, _ := pipxia.WatermarkRemover("https://h5.pipix.com/item/6837471268481014020?app_id=1319&app=super&timestamp=1596115110&carrier_region=cn&region=cn&language=zh&utm_source=weixin")
+url, _ := pipxia.WatermarkRemover("https://h5.pipix.com/s/J2w4Qrx/")
 
 // url 是原始视频，不包含水印。需要注意：URL只能在user-agent 为手机的打开，iPhone、Android等移动设备
 // 比如 "User-Agent":"Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1"
