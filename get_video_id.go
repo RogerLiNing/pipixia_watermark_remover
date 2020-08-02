@@ -2,14 +2,13 @@ package pipixia
 
 import (
 	"errors"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
 )
 
-func getVideoId(url string) (string, error) {
+func getVideoId(url string) (string, string, string, error) {
 	client := &http.Client{}
 	request, err := http.NewRequest("GET", url, nil)
 
@@ -20,22 +19,25 @@ func getVideoId(url string) (string, error) {
 
 	if err != nil {
 		log.Fatal(err)
-		return "", err
+		return "","","", err
 	}
 
 	var lastUrlQuery string
 	var videoId string
-
+	var cellId string
+	var cellType string
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 
 		if len(via) > 10 {
 			return errors.New("too many redirects")
 		}
 		lastUrlQuery = req.URL.RequestURI()
+		cellId = req.URL.Query().Get("cell_id")
+		cellType = req.URL.Query().Get("cell_type")
 
 		return nil
 	}
-	fmt.Println(videoId)
+
 	response, err := client.Do(request)
 
 
@@ -45,12 +47,12 @@ func getVideoId(url string) (string, error) {
 
 	if err != nil {
 		log.Fatal(err)
-		return "", err
+		return "", "", "", err
 	}
 
 	if len(strings.Split(strings.Split(lastUrlQuery, "?")[0], "/")) > 1 {
 		videoId = strings.Split(strings.Split(lastUrlQuery, "?")[0], "/")[2]
 	}
 
-	return videoId, nil
+	return videoId, cellId, cellType, nil
 }

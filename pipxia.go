@@ -1,9 +1,14 @@
 package pipixia
 
 func WatermarkRemover(url string) (string, error) {
-	videoId, err := getVideoId(url)
+	var videoLink string
+	videoId,cellId, cellType, err := getVideoId(url)
 
-	videoLink, err := getVideoLink(videoId)
+	if len(cellId) > 0 {
+		videoLink, err = getVideoLinkByCellId(cellId,cellType)
+	} else {
+		videoLink, err = getVideoLink(videoId)
+	}
 
 	return videoLink, err
 }

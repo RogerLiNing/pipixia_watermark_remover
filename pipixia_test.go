@@ -6,7 +6,7 @@ import (
 
 func TestGetAvailablePipixiaLink(t *testing.T) {
 	t.Log("测试正常的皮皮虾视频链接")
-	url := "https://h5.pipix.com/s/J2w4Qrx/"
+	url := "https://h5.pipix.com/s/J2w4Qrx/" // https://h5.pipix.com/s/JjaQjEj/
 	t.Log(url)
 	videoLink, err := WatermarkRemover(url)
 
@@ -14,7 +14,9 @@ func TestGetAvailablePipixiaLink(t *testing.T) {
 		t.Fail()
 		t.Log("返回视频链接，测试通过")
 	}
-
+	if len(videoLink) == 0 {
+		t.Fail()
+	}
 	t.Log(videoLink)
 }
 
