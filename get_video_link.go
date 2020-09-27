@@ -17,6 +17,7 @@ type Data struct {
 
 type Item struct {
 	OriginVideoURL OriginVideoURL `json:"origin_video_download"`
+	OriginVideoId  string         `json:"origin_video_id"`
 }
 
 type OriginVideoURL struct {
@@ -26,7 +27,6 @@ type OriginVideoURL struct {
 type URL struct {
 	URL string `json:"url"`
 }
-
 
 func getVideoLink(id string) (string, error) {
 
@@ -58,6 +58,8 @@ func getVideoLink(id string) (string, error) {
 
 	if len(jsonData.Data.Item.OriginVideoURL.UrlList) == 2 {
 		videoLink = jsonData.Data.Item.OriginVideoURL.UrlList[0].URL
+	} else if len(jsonData.Data.Item.OriginVideoId) > 0 {
+		videoLink, _ = getVideoDownloadLink(jsonData.Data.Item.OriginVideoId)
 	}
 
 	return videoLink, nil
