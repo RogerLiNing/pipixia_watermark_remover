@@ -2,6 +2,7 @@ package pipixia
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -28,13 +29,12 @@ type URL2 struct {
 	URL string `json:"url"`
 }
 
-
 func getVideoLinkByCellId(cellId string, cellType string) (string, error) {
 
 	client := &http.Client{}
 	// 通过这个接口获取视频信息，其中包括带有水印的链接
 	url := "https://h5.pipix.com/bds/webapi/cell/detail/?cell_id=" + cellId + "&cell_type=" + cellType + "&source=share"
-
+	fmt.Println(url)
 	request, err := http.NewRequest("GET", url, nil)
 
 	request.Header.Add("User-Agent", "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1")

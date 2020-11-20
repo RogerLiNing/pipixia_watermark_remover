@@ -17,13 +17,13 @@ type Data struct {
 
 type Item struct {
 	Video Video `json:"video"`
+
 }
 
 type Video struct {
 	VideoId string `json:"video_id"`
 	Title string `json:"text"`
 }
-
 
 
 func getVideoLink(id string) (string, error) {
@@ -53,6 +53,7 @@ func getVideoLink(id string) (string, error) {
 	jsonData := JsonData{}
 	json.Unmarshal(jsonByteData, &jsonData)
 	var videoLink = ""
+
 
 	if len(jsonData.Data.Item.Video.VideoId) > 0 {
 		videoLink = "https://api.huoshan.com/hotsoon/item/video/_source/?video_id=" + jsonData.Data.Item.Video.VideoId + "&line=0&app_id=0&vquality=normal&watermark=0&long_video=0&sf=5&ts=1596218843"
