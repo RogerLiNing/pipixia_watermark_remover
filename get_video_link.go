@@ -16,16 +16,14 @@ type Data struct {
 }
 
 type Item struct {
-	OriginVideoURL OriginVideoURL `json:"origin_video_download"`
+	Video Video `json:"video"`
 }
 
-type OriginVideoURL struct {
-	UrlList []URL `json:"url_list"`
+type Video struct {
+	VideoId string `json:"video_id"`
+	Title string `json:"text"`
 }
 
-type URL struct {
-	URL string `json:"url"`
-}
 
 
 func getVideoLink(id string) (string, error) {
@@ -56,8 +54,8 @@ func getVideoLink(id string) (string, error) {
 	json.Unmarshal(jsonByteData, &jsonData)
 	var videoLink = ""
 
-	if len(jsonData.Data.Item.OriginVideoURL.UrlList) == 2 {
-		videoLink = jsonData.Data.Item.OriginVideoURL.UrlList[0].URL
+	if len(jsonData.Data.Item.Video.VideoId) > 0 {
+		videoLink = "https://api.huoshan.com/hotsoon/item/video/_source/?video_id=" + jsonData.Data.Item.Video.VideoId + "&line=0&app_id=0&vquality=normal&watermark=0&long_video=0&sf=5&ts=1596218843"
 	}
 
 	return videoLink, nil

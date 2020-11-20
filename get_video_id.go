@@ -5,10 +5,29 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
-func getVideoId(url string) (string, string, string, error) {
+func getVideoId(url string) (string,string, string, string, error) {
+	var postID string
+	if strings.Contains(url, "/post/") {
+
+		//解析正则表达式，如果成功返回解释器
+		reg := regexp.MustCompile(`(?m)\/post\/(\d*)`)
+
+		//根据规则提取关键信息
+		result := reg.FindAllStringSubmatch(url,-1)
+
+		if len(result) > 0 {
+			postID = result[0][1]
+			return "", "", "", postID, nil
+		} else {
+			return "", "", "", "", nil
+		}
+
+	}
+
 	client := &http.Client{}
 	request, err := http.NewRequest("GET", url, nil)
 
@@ -19,13 +38,14 @@ func getVideoId(url string) (string, string, string, error) {
 
 	if err != nil {
 		log.Fatal(err)
-		return "","","", err
+		return "", "", "", "", err
 	}
 
 	var lastUrlQuery string
 	var videoId string
 	var cellId string
 	var cellType string
+
 	client.CheckRedirect = func(req *http.Request, via []*http.Request) error {
 
 		if len(via) > 10 {
@@ -47,12 +67,13 @@ func getVideoId(url string) (string, string, string, error) {
 
 	if err != nil {
 		log.Fatal(err)
-		return "", "", "", err
+		return "", "", "", "", nil
 	}
+
 
 	if len(strings.Split(strings.Split(lastUrlQuery, "?")[0], "/")) > 1 {
 		videoId = strings.Split(strings.Split(lastUrlQuery, "?")[0], "/")[2]
 	}
 
-	return videoId, cellId, cellType, nil
+	return videoId, cellId, cellType, postID, nil
 }

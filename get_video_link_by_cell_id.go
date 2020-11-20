@@ -19,8 +19,9 @@ type Comment struct {
 	VideoFallBack VideoFallBack `json:"video_fallback"`
 }
 
+
 type VideoFallBack struct {
-	UrlList []URL `json:"url_list"`
+	UrlList []URL2 `json:"url_list"`
 }
 
 type URL2 struct {
