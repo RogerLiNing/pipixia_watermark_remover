@@ -6,32 +6,19 @@ import (
 
 func TestGetAvailablePipixiaLink(t *testing.T) {
 	t.Log("测试正常的皮皮虾视频链接")
-	url := "https://h5.ippzone.com/pp/post/363597059443?zy_to=copy_link" // https://h5.pipix.com/s/Jum16RV/  https://h5.ippzone.com/pp/post/363597059443?zy_to=copy_link
+	// VideoId https://h5.pipix.com/s/Jx8aW6Y/
+	// PostID  https://h5.ippzone.com/pp/post/363597059443
+	// CellId  https://h5.pipix.com/s/Jum16RV/
+	url := "https://h5.pipix.com/s/Jum16RV/"
 
-	t.Log(url)
-	videoLink, err := WatermarkRemover(url)
-
-	if err != nil {
-		t.Fail()
-		t.Log("返回视频链接，测试通过")
-	}
-	if len(videoLink) == 0 {
-		t.Fail()
-	}
-	t.Log(videoLink)
-}
-
-func TestGetUnAvailablePipixiaLink(t *testing.T) {
-	t.Log("测试正常的皮皮虾视频链接")
-	url := "https://h5.pipix.com/s/J200w4Qr0157x/"
-	t.Log(url)
 	videoLink, err := WatermarkRemover(url)
 
 	if err != nil {
 		t.Fail()
 	}
-	if len(videoLink) == 0 {
-		t.Log("返回为空，测试通过")
+
+	if len(videoLink) > 0 {
+		t.Log("测试通过")
 	}
-	t.Log(videoLink)
+
 }
